@@ -11,8 +11,7 @@ export const Profile = () => {
 
   return (
     <div>
-      <h1>Profile</h1>
-      <button onClick={exit}>Выйти</button>
+      <button className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors duration-300" onClick={exit}>Выйти</button>
     </div>
   );
 };

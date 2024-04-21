@@ -1,19 +1,25 @@
-import { userAPI } from '@/services/UserService';
+import Link from 'next/link';
+import { Filter } from '@/components/Filters';
+import { IUser } from '@/models/IUser';
 
-export const Users = () => {
-  const { data: users, isLoading } = userAPI.useFetchUsersQuery(0);
+interface IUsersProps {
+  users: IUser[]
+}
 
-  if (isLoading) {
-    return <div>LOADING...</div>;
-  }
+export const Users = ({ users }: IUsersProps) => (
+  <div className="flex flex-col">
+    <Filter />
 
-  return (
-    <div>
-      {users?.data?.map(({ first_name, id }) => (
-        <div key={id}>
-          <h1>{first_name}</h1>
-        </div>
-      ))}
-    </div>
-  );
-};
+    {users.map(({ first_name, last_name, id }) => (
+      <div key={id} className="my-5 self-center font-bold text-lg hover:text-amber-100">
+        <Link href={`users/${id}`}>
+          {id}
+          {' '}
+          {first_name}
+          {' '}
+          {last_name}
+        </Link>
+      </div>
+    ))}
+  </div>
+);
