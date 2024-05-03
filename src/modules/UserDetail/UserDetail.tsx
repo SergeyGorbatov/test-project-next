@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { IUserDetailProps } from './types';
 
-export const UserDetail = ({ user }) => {
+export const UserDetail = ({ user }: IUserDetailProps) => {
   const {
     email, first_name, last_name, avatar,
   } = user;

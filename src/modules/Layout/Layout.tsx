@@ -1,5 +1,4 @@
-import { Footer } from '@/components/Footer';
-import { Header } from '@/components/Header';
+import { Footer, Header } from '@/components';
 import { ILayoutProps } from '@/modules/Layout/types';
 
 export const Layout = ({ children }: ILayoutProps) => (

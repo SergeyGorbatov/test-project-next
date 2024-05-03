@@ -1,11 +1,19 @@
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { IUser, IUsers } from '@/models/IUser';
 import { Layout } from '@/modules/Layout';
 import { UserDetail } from '@/modules/UserDetail';
 
-const UserDetailPage = (props) => <Layout><UserDetail user={props.user.data} /></Layout>;
+interface IGetStaticProps {
+  user: {
+    data: IUser
+  }
+}
 
-export const getStaticPaths = (async () => {
+const UserDetailPage = ({ user }: IGetStaticProps) => <Layout><UserDetail user={user.data} /></Layout>;
+
+export const getStaticPaths: GetStaticPaths = (async () => {
   const res = await fetch('https://reqres.in/api/users');
-  const users = await res.json();
+  const users: IUsers = await res.json();
 
   const paths = users.data.map((user) => ({
     params: { id: String(user.id) },
@@ -17,8 +25,8 @@ export const getStaticPaths = (async () => {
   };
 });
 
-export const getStaticProps = (async (context) => {
-  const res = await fetch(`https://reqres.in/api/users/${context.params.id}`);
+export const getStaticProps: GetStaticProps = (async (context) => {
+  const res = await fetch(`https://reqres.in/api/users/${context.params?.id}`);
   const user = await res.json();
 
   return { props: { user } };

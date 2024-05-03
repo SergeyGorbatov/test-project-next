@@ -1,10 +1,15 @@
+import { GetStaticProps } from 'next';
+import { IUsers } from '@/models/IUser';
 import { Layout } from '@/modules/Layout';
 import { Users } from '@/modules/Users';
-import { userAPI } from '@/services/UserService';
 
-const UsersPage = (props) => (<Layout><Users users={props.users.data} /></Layout>);
+interface IGetStaticProps {
+  users: IUsers
+}
 
-export const getStaticProps = (async (context) => {
+const UsersPage = ({ users }: IGetStaticProps) => (<Layout><Users users={users.data} /></Layout>);
+
+export const getStaticProps: GetStaticProps = (async () => {
   const res = await fetch('https://reqres.in/api/users');
   const users = await res.json();
 

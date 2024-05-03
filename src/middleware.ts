@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// eslint-disable-next-line consistent-return
 export function middleware(request: NextRequest) {
   const isAuth = request.cookies.get('token-test')?.value;
   const protectedPaths = ['/users', '/profile'];

@@ -11,9 +11,7 @@ export interface IUser {
 }
 
 export interface IAuthUserResponse {
-  data: {
-    token: string
-  }
+  token: string
 }
 
 export interface IAuthUser {

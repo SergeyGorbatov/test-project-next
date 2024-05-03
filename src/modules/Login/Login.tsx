@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormValues } from '@/modules/Login/types';
 import { userAPI } from '@/services/UserService';
 
 export const Login = () => {
@@ -12,13 +13,19 @@ export const Login = () => {
   } = useForm();
   const router = useRouter();
 
-  const onSubmit = async (authData: { email: string, password: string }) => {
+  const onSubmit: SubmitHandler<FormValues> = async (authData) => {
     try {
       const response = await fetchLogin(authData);
 
-      if (response?.data?.token) {
-        Cookies.set('token-test', response.data.token);
-        router.push('/profile');
+      if ('data' in response) {
+        const { data } = response;
+
+        if (data.token) {
+          Cookies.set('token-test', data.token);
+          router.push('/profile');
+        }
+      } else {
+        console.error('An error occurred:', response.error);
       }
     } catch (e) {
       console.error(e);
@@ -46,7 +53,7 @@ export const Login = () => {
           Login
         </button>
 
-        {error?.data?.error && <span className="text-red-400 font-bold">{error?.data?.error}</span>}
+        {error && 'data' in error && <span className="text-red-400 font-bold">{error.data?.error}</span>}
       </form>
     </div>
   );
